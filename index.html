@@ -2,283 +2,233 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Народный проект Herbalife Kazakhstan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         [x-cloak] { display: none !important; }
-        body {
-            font-family: 'Montserrat', sans-serif;
-            scroll-behavior: smooth;
-            background: #0a0f1a;
-            color: #e2e8f0;
-        }
-
-        .glass {
-            background: rgba(15, 23, 42, 0.72);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-        }
-
+        body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; background: #0a0f1a; color: #e2e8f0; -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(15, 23, 42, 0.72); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.07); }
         .hl-green { color: #7BC143; }
         .bg-hl-green { background-color: #7BC143; }
 
-        /* ── Современные поля ввода ── */
-        .form-group {
-            position: relative;
-            margin-bottom: 2.25rem; /* расстояние между полями */
-        }
-
+        .form-group { position: relative; margin-bottom: 1rem; }
         .input-dark {
-            background: rgba(30, 41, 59, 0.48);
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 12px;
-            padding: 1.125rem 1.375rem;
-            font-size: 1.05rem;
-            color: white;
-            width: 100%;
-            transition: all 0.28s ease;
+            background: rgba(30, 41, 59, 0.55); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            padding: 0.8rem 1rem; font-size: 16px; color: white; width: 100%; height: 3.5rem; transition: all 0.25s ease;
+        }
+        .input-dark:focus { border-color: #7BC143; outline: none; background: rgba(30, 41, 59, 0.8); }
+
+        .checkbox-custom {
+            width: 22px; height: 22px; border: 2px solid rgba(255,255,255,0.2); border-radius: 6px;
+            appearance: none; cursor: pointer; transition: all 0.2s; position: relative; flex-shrink: 0;
+        }
+        .checkbox-custom:checked { background-color: #7BC143; border-color: #7BC143; }
+        .checkbox-custom:checked::after {
+            content: '✓'; position: absolute; color: white; font-size: 14px; left: 4px; top: -1px;
         }
 
-        .input-dark:focus {
-            outline: none;
-            border-color: #7BC143;
-            box-shadow: 0 0 0 3.5px rgba(123, 193, 67, 0.20);
-            background: rgba(30, 41, 59, 0.70);
-        }
+        .news-card { background: rgba(255,255,255,0.03); border-radius: 20px; transition: transform 0.3s; overflow: hidden; }
 
-        .input-label {
-            position: absolute;
-            left: 1.375rem;
-            top: 1.125rem;
-            font-size: 0.875rem;
-            color: rgba(203, 213, 225, 0.65);
-            pointer-events: none;
-            transition: all 0.28s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            font-weight: 600;
-        }
-
-        .input-dark:focus ~ .input-label,
-        .input-dark:not(:placeholder-shown) ~ .input-label {
-            top: -0.75rem;
-            left: 1.1rem;
-            font-size: 0.6875rem;
-            padding: 0 0.4rem;
-            background: #0a0f1a;
-            color: #7BC143;
-        }
-
-        select.input-dark {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-position: right 1.375rem center;
-            background-repeat: no-repeat;
-            background-size: 18px;
-            padding-right: 3rem;
-            cursor: pointer;
-        }
-
-        /* ── Блок одного участника ── */
-        .participant-block {
-            background: rgba(15, 23, 42, 0.38);
-            border-radius: 1.5rem;
-            padding: 2.5rem 2.25rem;
-            border: 1px solid rgba(123,193,67,0.09);
-            transition: all 0.32s ease;
-        }
-
-        .participant-block:hover {
-            border-color: rgba(123,193,67,0.28);
-            background: rgba(15, 23, 42, 0.50);
-            transform: translateY(-4px);
-        }
-
-        .participant-number {
-            font-size: 5.5rem;
-            line-height: 0.75;
-            font-weight: 900;
-            color: #7BC143;
-            opacity: 0.16;
-            -webkit-text-stroke: 1.2px rgba(123,193,67,0.45);
-            letter-spacing: -0.08em;
-        }
-
-        .group:hover .participant-number {
-            opacity: 0.42;
-        }
-
-        /* ── Кнопка отправки ── */
-        .submit-btn {
-            background: linear-gradient(135deg, #7BC143 0%, #5ea32f 100%);
-            color: white;
-            font-weight: 900;
-            letter-spacing: 0.16em;
-            padding: 1.8rem 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 12px 35px -10px rgba(123,193,67,0.48);
-            transition: all 0.35s ease;
-            text-transform: uppercase;
-            font-size: 0.875rem;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 22px 45px -12px rgba(123,193,67,0.65);
-        }
-
-        .submit-btn:active {
-            transform: translateY(1px);
-            box-shadow: 0 10px 25px -8px rgba(123,193,67,0.5);
-        }
-
-        /* Анимация появления */
-        .fade-in { animation: fadeInUp 0.6s ease-out forwards; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(18px); }
-            to   { opacity: 1; transform: translateY(0); }
+        /* Фикс для мобильного Safari, чтобы не зумил инпуты */
+        @media screen and (max-width: 768px) {
+            input, select, textarea { font-size: 16px !important; }
         }
     </style>
 </head>
-<body class="bg-[#0a0f1a] text-slate-200" x-data="{
+<body x-data="{
     lang: 'ru',
     teamSize: 1,
-    content: {
-        ru: { hero: 'Народный Проект', sub: 'Инициатива Herbalife по поддержке активного образа жизни в Казахстане.', btn: 'Принять участие', about: 'О проекте', news: 'Новости', reg: 'Регистрация', team: 'Название команды', size: 'Количество (1-5)', send: 'Подать заявку', member: 'Данные участника', name: 'ФИО', phone: 'Телефон' },
-        kz: { hero: 'Халықтық Жоба', sub: 'Herbalife компаниясының Қазақстандағы белсенді өмір салтын қолдау бастамасы.', btn: 'Қатысу', about: 'Жоба туралы', news: 'Жаңалықтар', reg: 'Тіркелу', team: 'Команда атауы', size: 'Саны (1-5)', send: 'Өтінім беру', member: 'Қатысушы деректері', name: 'Аты-жөні', phone: 'Телефон' },
-        en: { hero: 'People\'s Project', sub: 'Herbalife initiative supporting an active lifestyle across all regions of Kazakhstan.', btn: 'Join Project', about: 'About', news: 'News', reg: 'Registration', team: 'Team Name', size: 'Size (1-5)', send: 'Submit Request', member: 'Member Details', name: 'Full Name', phone: 'Phone' }
+    mobileMenu: false,
+    t: {
+        ru: {
+            hero_title: 'Народный Проект', hero_sub: 'Инициатива Herbalife по поддержке активного образа жизни в Казахстане.',
+            btn_join: 'Принять участие', btn_more: 'Узнать больше',
+            about_title: 'О проекте', about_text: 'Мы объединяем людей, стремящихся к здоровью и активному долголетию. Наша цель — создать сообщество единомышленников по всей стране.',
+            news_title: 'Новости проекта', reg_title: 'Регистрация команды',
+            team_name: 'Название команды / семьи', team_size: 'Размер команды',
+            m_name: 'ФИО', m_birth: 'Дата рождения', m_phone: 'Телефон',
+            emergency_title: 'Экстренный контакт', emergency_name: 'Имя контакта',
+            consent_1: 'Согласие на обработку персональных данных', consent_2: 'Согласие на использование медиаматериалов',
+            submit: 'Отправить заявку'
+        },
+        kz: {
+            hero_title: 'Халықтық Жоба', hero_sub: 'Herbalife компаниясының Қазақстандағы белсенді өмір салтын қолдау бастамасы.',
+            btn_join: 'Қатысу', btn_more: 'Толығырақ',
+            about_title: 'Жоба туралы', about_text: 'Біз денсаулық пен белсенді ұзақ өмірге ұмтылатын жандардың басын қосамыз. Мақсатымыз — бүкіл ел бойынша пікірлестер қауымдастығын құру.',
+            news_title: 'Жоба жаңалықтары', reg_title: 'Команданы тіркеу',
+            team_name: 'Команда / отбасы атауы', team_size: 'Команда құрамы',
+            m_name: 'Аты-жөні', m_birth: 'Туған күні', m_phone: 'Телефон',
+            emergency_title: 'Шұғыл байланыс', emergency_name: 'Байланыс адамы',
+            consent_1: 'Дербес деректерді өңдеуге келісім', consent_2: 'Медиа-материалдарды пайдалануға келісім',
+            submit: 'Өтінім беру'
+        }
     }
 }" x-cloak>
 
-    <nav class="fixed w-full z-50 glass border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav class="fixed w-full z-50 glass border-b border-white/5 px-4 md:px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-hl-green rounded-full shadow-[0_0_15px_rgba(123,193,67,0.5)]"></div>
-                <div class="text-xl font-black tracking-tighter text-white uppercase italic">Herbalife <span class="font-light text-slate-400">KZ</span></div>
+                <div class="w-7 h-7 bg-hl-green rounded-full"></div>
+                <span class="font-black tracking-tighter uppercase italic text-white text-sm md:text-base">Herbalife <span class="text-slate-400 font-light">KZ</span></span>
             </div>
 
-            <div class="hidden md:flex space-x-10 items-center text-[11px] uppercase tracking-[0.2em] font-bold">
-                <a href="#about" class="hover:text-green-400 transition" x-text="content[lang].about"></a>
-                <a href="https://herbalifekazakhstan.com/news/" target="_blank" class="hover:text-green-400 transition flex items-center gap-1">
-                    <span x-text="content[lang].news"></span>
-                    <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                </a>
-                <a href="#register" class="hover:text-green-400 transition" x-text="content[lang].reg"></a>
+            <div class="hidden md:flex space-x-8 text-[11px] uppercase font-bold tracking-widest">
+                <a href="#about" class="hover:text-hl-green transition" x-text="t[lang].about_title"></a>
+                <a href="#news" class="hover:text-hl-green transition" x-text="t[lang].news_title"></a>
+                <a href="#register" class="hover:text-hl-green transition" x-text="t[lang].reg_title"></a>
+            </div>
 
-                <div class="flex gap-2 ml-4 border-l border-white/10 pl-4">
-                    <template x-for="l in ['ru', 'kz', 'en']">
-                        <button @click="lang = l"
-                                :class="lang === l ? 'text-hl-green' : 'text-slate-500'"
-                                class="hover:text-white transition" x-text="l.toUpperCase()"></button>
-                    </template>
+            <div class="flex items-center gap-4">
+                <div class="flex gap-3 text-xs font-bold border-r border-white/10 pr-4">
+                    <button @click="lang = 'ru'" :class="lang === 'ru' ? 'text-hl-green' : 'text-slate-500'">RU</button>
+                    <button @click="lang = 'kz'" :class="lang === 'kz' ? 'text-hl-green' : 'text-slate-500'">KZ</button>
                 </div>
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden text-white">
+                    <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg x-show="mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
+        </div>
+
+        <div x-show="mobileMenu" x-transition class="md:hidden pt-4 pb-2 space-y-4 text-center uppercase text-xs font-bold tracking-widest border-t border-white/5 mt-4">
+            <a href="#about" @click="mobileMenu = false" class="block py-2" x-text="t[lang].about_title"></a>
+            <a href="#news" @click="mobileMenu = false" class="block py-2" x-text="t[lang].news_title"></a>
+            <a href="#register" @click="mobileMenu = false" class="block py-2 text-hl-green" x-text="t[lang].reg_title"></a>
         </div>
     </nav>
 
-    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section class="relative min-h-screen flex items-center justify-center text-center px-4 pt-20">
         <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0a0f1a] via-[#0a0f1a]/80 to-transparent z-10"></div>
-            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80" class="w-full h-full object-cover opacity-30 scale-110">
-            <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-hl-green/10 rounded-full blur-[120px]"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-[#0a0f1a]/80 via-[#0a0f1a]/60 to-[#0a0f1a]"></div>
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80" class="w-full h-full object-cover">
         </div>
-
-        <div class="relative z-20 px-6 max-w-7xl mx-auto w-full">
-            <div class="max-w-3xl">
-                <span class="inline-block bg-hl-green text-[#0a0f1a] text-[10px] font-black px-4 py-1.5 rounded-sm mb-6 tracking-[0.3em] uppercase fade-in"
-                      x-text="lang === 'ru' ? 'Официальный проект' : (lang === 'kz' ? 'Ресми жоба' : 'Official Project')"></span>
-                <h1 class="text-6xl md:text-[9rem] font-black text-white mb-6 leading-[0.85] uppercase tracking-tighter fade-in" style="animation-delay: 0.1s">
-                    <span x-text="lang === 'ru' ? 'Народный' : (lang === 'kz' ? 'Халықтық' : 'People\'s')"></span> <br>
-                    <span class="hl-green underline decoration-white/10 underline-offset-8" x-text="lang === 'ru' ? 'Проект' : (lang === 'kz' ? 'Жоба' : 'Project')"></span>
-                </h1>
-                <p class="text-lg md:text-xl text-slate-400 mb-10 font-light leading-relaxed max-w-xl fade-in" style="animation-delay: 0.2s"
-                   x-text="content[lang].sub">
-                </p>
-                <div class="flex gap-4 fade-in" style="animation-delay: 0.3s">
-                    <a href="#register" class="bg-hl-green hover:shadow-[0_0_30px_rgba(123,193,67,0.4)] hover:-translate-y-1 text-white font-black px-12 py-6 rounded-sm transition-all uppercase text-xs tracking-widest"
-                       x-text="content[lang].btn"></a>
-                </div>
+        <div class="relative z-10 max-w-4xl">
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-black text-white uppercase mb-6 leading-[0.9] italic" x-text="t[lang].hero_title"></h1>
+            <p class="text-sm md:text-xl text-slate-300 mb-8 max-w-2xl mx-auto px-4" x-text="t[lang].hero_sub"></p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#register" class="w-full sm:w-auto bg-hl-green text-white px-10 py-5 rounded-full font-black uppercase text-xs md:text-sm hover:scale-105 transition shadow-lg shadow-hl-green/20" x-text="t[lang].btn_join"></a>
+                <a href="#about" class="w-full sm:w-auto bg-white/10 backdrop-blur text-white px-10 py-5 rounded-full font-black uppercase text-xs md:text-sm hover:bg-white/20 transition" x-text="t[lang].btn_more"></a>
             </div>
         </div>
     </section>
 
-    <!-- ── Только эта секция изменена ── -->
-    <section id="register" class="py-32 px-6 relative">
-        <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none"></div>
-
-        <div class="max-w-5xl mx-auto relative">
-            <div class="glass p-8 md:p-20 rounded-[2rem] border-white/10 shadow-2xl overflow-hidden">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-hl-green/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
-
-                <div class="mb-16">
-                    <h2 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4" x-text="content[lang].reg"></h2>
-                    <div class="w-24 h-2 bg-hl-green"></div>
+    <section id="about" class="py-16 md:py-24 px-4 md:px-6 bg-[#0f172a]">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div class="order-2 md:order-1">
+                <h2 class="text-3xl md:text-6xl font-black text-white uppercase mb-6 md:mb-8" x-text="t[lang].about_title"></h2>
+                <p class="text-base md:text-lg text-slate-400 leading-relaxed mb-8" x-text="t[lang].about_text"></p>
+                <div class="grid grid-cols-2 gap-4 md:gap-6">
+                    <div class="p-5 md:p-6 border border-white/5 rounded-2xl bg-white/2">
+                        <div class="text-2xl md:text-3xl font-black hl-green mb-1 md:mb-2">100%</div>
+                        <div class="text-[10px] uppercase tracking-widest text-slate-500">Натурально</div>
+                    </div>
+                    <div class="p-5 md:p-6 border border-white/5 rounded-2xl bg-white/2">
+                        <div class="text-2xl md:text-3xl font-black hl-green mb-1 md:mb-2">5000+</div>
+                        <div class="text-[10px] uppercase tracking-widest text-slate-500">Участников</div>
+                    </div>
                 </div>
+            </div>
+            <div class="order-1 md:order-2 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl h-64 md:h-auto">
+                <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
 
-                <form class="space-y-20">
-                    <div class="grid md:grid-cols-2 gap-12">
-                        <div class="form-group">
-                            <input type="text" id="team_name" class="input-dark" placeholder=" " required>
-                            <label for="team_name" class="input-label" x-text="content[lang].team"></label>
-                        </div>
-                        <div class="form-group">
-                            <select id="team_size" x-model="teamSize" class="input-dark">
-                                <template x-for="n in 5">
-                                    <option :value="n" class="bg-[#0a0f1a]" x-text="n"></option>
-                                </template>
-                            </select>
-                            <label for="team_size" class="input-label" x-text="content[lang].size"></label>
+    <section id="news" class="py-16 md:py-24 px-4 md:px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-black text-white uppercase mb-10 md:mb-12 text-center" x-text="t[lang].news_title"></h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                <template x-for="i in [1,2,3]">
+                    <div class="news-card">
+                        <div class="h-40 md:h-48 bg-slate-800"></div>
+                        <div class="p-6">
+                            <div class="text-hl-green text-[10px] font-bold mb-2">12.03.2026</div>
+                            <h3 class="text-lg font-bold text-white mb-3">Запуск нового этапа в Алматы</h3>
+                            <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">Узнайте подробности о предстоящем марафоне здоровья в южной столице...</p>
+                            <a href="https://herbalifekazakhstan.com" class="text-hl-green text-[10px] font-black uppercase tracking-widest hover:underline">Читать далее →</a>
                         </div>
                     </div>
+                </template>
+            </div>
+        </div>
+    </section>
 
-                    <div class="space-y-16">
-                        <template x-for="i in parseInt(teamSize)" :key="i">
-                            <div class="participant-block fade-in" :style="'animation-delay: ' + ((i-1)*0.1) + 's'">
-                                <div class="flex items-center gap-6 mb-10 group">
-                                    <span class="participant-number" x-text="'0' + i"></span>
-                                    <h4 class="font-bold text-sm uppercase tracking-[0.3em] text-white" x-text="content[lang].member"></h4>
+    <section id="register" class="py-16 md:py-24 px-4 md:px-6 bg-[#0a0f1a]">
+        <div class="max-w-4xl mx-auto glass p-6 md:p-16 rounded-[1.5rem] md:rounded-[2.5rem]">
+            <h2 class="text-2xl md:text-5xl font-black text-white uppercase mb-10 md:mb-12 text-center" x-text="t[lang].reg_title"></h2>
+
+            <form action="#" method="POST" class="space-y-8 md:space-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="form-group">
+                        <label class="block text-[9px] md:text-[10px] uppercase font-black text-hl-green mb-2 ml-2" x-text="t[lang].team_name"></label>
+                        <input type="text" class="input-dark" placeholder="Gold Team" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-[9px] md:text-[10px] uppercase font-black text-hl-green mb-2 ml-2" x-text="t[lang].team_size"></label>
+                        <select x-model="teamSize" class="input-dark bg-[#1e293b]">
+                            <option value="1">1</option><option value="2">2</option>
+                            <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-6 md:space-y-8">
+                    <template x-for="i in parseInt(teamSize)" :key="i">
+                        <div class="p-5 md:p-6 border border-white/5 bg-white/2 rounded-xl md:rounded-2xl relative">
+                            <div class="absolute -top-2 -left-2 w-6 h-6 md:w-8 md:h-8 bg-hl-green text-white rounded-lg flex items-center justify-center font-black text-[10px] md:text-xs" x-text="i"></div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-2">
+                                <input type="text" class="input-dark" :placeholder="t[lang].m_name" required>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input type="date" class="input-dark" required>
+                                    <select class="input-dark bg-[#1e293b]">
+                                        <option value="m">M</option><option value="f">F</option>
+                                    </select>
                                 </div>
-                                <div class="grid md:grid-cols-3 gap-10">
-                                    <div class="form-group">
-                                        <input type="text" :id="'name_'+i" class="input-dark" placeholder=" " required>
-                                        <label :for="'name_'+i" class="input-label" x-text="content[lang].name"></label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" :id="'email_'+i" class="input-dark" placeholder=" " required>
-                                        <label :for="'email_'+i" class="input-label">Email</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="tel" :id="'phone_'+i" class="input-dark" placeholder=" " required>
-                                        <label :for="'phone_'+i" class="input-label" x-text="content[lang].phone"></label>
-                                    </div>
-                                </div>
+                                <input type="email" class="input-dark" placeholder="Email" required>
+                                <input type="tel" class="input-dark" :placeholder="t[lang].m_phone" required>
                             </div>
-                        </template>
-                    </div>
+                        </div>
+                    </template>
+                </div>
 
-                    <div class="pt-10">
-                        <button type="submit" class="submit-btn w-full">
-                            <span x-text="content[lang].send"></span>
-                        </button>
+                <div class="p-5 md:p-6 border-2 border-dashed border-white/10 rounded-xl md:rounded-2xl">
+                    <h3 class="text-hl-green font-black uppercase text-[10px] mb-6 tracking-widest" x-text="t[lang].emergency_title"></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <input type="text" class="input-dark" :placeholder="t[lang].emergency_name" required>
+                        <input type="tel" class="input-dark" :placeholder="t[lang].m_phone" required>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <div class="space-y-4 pt-2">
+                    <label class="flex items-start gap-4 cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom" required>
+                        <span class="text-[10px] md:text-xs text-slate-400 leading-tight pt-1" x-text="t[lang].consent_1"></span>
+                    </label>
+                    <label class="flex items-start gap-4 cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom" required>
+                        <span class="text-[10px] md:text-xs text-slate-400 leading-tight pt-1" x-text="t[lang].consent_2"></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full bg-hl-green text-white py-5 md:py-6 rounded-2xl font-black uppercase tracking-widest text-xs md:text-sm hover:brightness-110 transition shadow-xl shadow-hl-green/20" x-text="t[lang].submit"></button>
+            </form>
         </div>
     </section>
 
-    <footer class="bg-black py-20 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="text-3xl font-black uppercase tracking-tighter text-white italic">Herbalife <span class="hl-green">PROJECT</span></div>
-            <div class="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                <a href="https://herbalifekazakhstan.com/" class="hover:text-hl-green transition">Official Web</a>
-                <a href="https://t.me/herbalife_kz" class="hover:text-hl-green transition">Telegram</a>
-                <a href="https://instagram.com/herbalife_kz" class="hover:text-hl-green transition">Instagram</a>
+    <footer class="bg-black py-12 md:py-20 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12">
+            <div class="text-center md:text-left">
+                <div class="text-xl md:text-2xl font-black uppercase italic text-white mb-2">Herbalife <span class="hl-green">PROJECT</span></div>
+                <div class="text-[9px] text-slate-600 uppercase tracking-widest">© 2026 Kazakhstan. All rights reserved.</div>
             </div>
-            <div class="text-[9px] text-slate-600 uppercase tracking-widest font-bold">© 2026 Kazakhstan Project</div>
+            <div class="flex flex-wrap justify-center gap-6 md:gap-8 text-[9px] font-bold uppercase tracking-widest">
+                <a href="#" class="text-slate-400 hover:text-hl-green transition">Instagram</a>
+                <a href="#" class="text-slate-400 hover:text-hl-green transition">Telegram</a>
+                <a href="#" class="text-slate-400 hover:text-hl-green transition">Official Web</a>
+            </div>
         </div>
     </footer>
 
